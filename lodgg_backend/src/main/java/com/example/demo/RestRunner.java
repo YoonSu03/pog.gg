@@ -33,10 +33,18 @@ public class RestRunner {
 
         return helloResult;
     }
-    @GetMapping("/userleaguesSecond")
-    public String userleaguesSecond(@RequestParam String leagueId) throws InterruptedException {
+    @GetMapping("/matchlists")
+    public String matchlists(@RequestParam String encryptedSummonerId) throws InterruptedException {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/" + leagueId +  "?api_key=" + api_key, String.class);
+        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/match/v4/matchlists/by-account/" + encryptedSummonerId +  "?api_key=" + api_key, String.class);
+        System.out.println(helloResult);
+
+        return helloResult;
+    }
+    @GetMapping("/matches")
+    public String matches(@RequestParam String matchId) throws InterruptedException {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/match/v4/matches/" + matchId +  "?api_key=" + api_key, String.class);
         System.out.println(helloResult);
 
         return helloResult;

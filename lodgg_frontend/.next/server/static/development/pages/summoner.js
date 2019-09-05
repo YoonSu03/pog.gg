@@ -97,7 +97,7 @@ module.exports =
 /*!********************!*\
   !*** ./api/api.js ***!
   \********************/
-/*! exports provided: getInfo, getleagueFirst, getleagueSecond */
+/*! exports provided: getInfo, getleagueFirst, getleagueSecond, getmatchlists, getmatches */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -105,6 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInfo", function() { return getInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getleagueFirst", function() { return getleagueFirst; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getleagueSecond", function() { return getleagueSecond; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getmatchlists", function() { return getmatchlists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getmatches", function() { return getmatches; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "axios");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -127,6 +129,20 @@ function getleagueSecond(leagueId) {
   return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(address + "/userleaguesSecond", {
     params: {
       leagueId: leagueId
+    }
+  });
+}
+function getmatchlists(encryptedSummonerId) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(address + "/matchlists", {
+    params: {
+      encryptedSummonerId: encryptedSummonerId
+    }
+  });
+}
+function getmatches(matchId) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(address + "/matches", {
+    params: {
+      matchId: matchId
     }
   });
 }
@@ -593,31 +609,83 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../api/api */ "./api/api.js");
+/* harmony import */ var styled_jsx_style__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-jsx/style */ "styled-jsx/style");
+/* harmony import */ var styled_jsx_style__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_jsx_style__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../api/api */ "./api/api.js");
 var _jsxFileName = "D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\components\\Summoner\\Leagues\\Leagues.js";
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
 
 
 
 const Leauges = ({
-  leagueEntriesInfo
+  userinfo
 }) => {
   const {
-    0: leagueinfo,
-    1: setLeagueinfo
-  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    console.log(leagueEntriesInfo);
-  }, [leagueEntriesInfo]);
+    0: matchlists,
+    1: setMatchlists
+  } = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
+  const {
+    0: matches,
+    1: setMatches
+  } = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
+  const matchArray = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]);
+
+  const getMatches = matches => {
+    matches.map(v => {
+      _api_api__WEBPACK_IMPORTED_MODULE_2__["getmatches"](v.gameId).then(response => matchArray.push(response.data)).catch(error => console.log(error));
+    });
+    setMatches(matchArray);
+  };
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(() => {
+    _api_api__WEBPACK_IMPORTED_MODULE_2__["getmatchlists"](userinfo.accountId).then(response => {
+      setMatchlists(response.data.matches);
+      return getMatches(response.data.matches);
+    }).catch(error => console.log(error));
+  }, [userinfo]);
+  console.log(matchlists, matches);
   return __jsx("div", {
+    className: "jsx-2730477603",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 10
+      lineNumber: 25
     },
     __self: undefined
-  });
+  }, __jsx("div", {
+    className: "jsx-2730477603" + " " + "GameItemList",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 26
+    },
+    __self: undefined
+  }, __jsx("div", {
+    className: "jsx-2730477603" + " " + "GameItemWrap",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 27
+    },
+    __self: undefined
+  }, __jsx("div", {
+    className: "jsx-2730477603" + " " + "GameItem Win",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 28
+    },
+    __self: undefined
+  }, __jsx("div", {
+    className: "jsx-2730477603" + " " + "Content",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: undefined
+  })))), __jsx(styled_jsx_style__WEBPACK_IMPORTED_MODULE_0___default.a, {
+    id: "2730477603",
+    __self: undefined
+  }, ".GameItemWrap{position:relative;border-radius:3px;margin-bottom:8px;}.GameItem{position:relative;background:none;}.GameItem.Win>.Content{table-layout:fixed;background-color:#a3cfec;border-color:#99b9cf;}.GameItem>.Content{display:table;width:689px;height:97px;border-collase:collapse;border:1px solid #cdd2d2;}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkQ6XFxSZWFjdFByb2plY3RcXGphdmFwcm9qZWN0XFxsb2QuZ2dcXGxvZGdnX2Zyb250ZW5kXFxjb21wb25lbnRzXFxTdW1tb25lclxcTGVhZ3Vlc1xcTGVhZ3Vlcy5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFtQ2lCLEFBRzJDLEFBS0EsQUFJQyxBQUtMLGNBQ0YsSUFkTSxBQUtGLENBSVMsT0FNYixRQVRoQixFQUxzQixFQWVNLE1BTkgsVUFSekIsUUFlNkIsR0FON0Isc0JBT0EiLCJmaWxlIjoiRDpcXFJlYWN0UHJvamVjdFxcamF2YXByb2plY3RcXGxvZC5nZ1xcbG9kZ2dfZnJvbnRlbmRcXGNvbXBvbmVudHNcXFN1bW1vbmVyXFxMZWFndWVzXFxMZWFndWVzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7dXNlU3RhdGUsIHVzZUVmZmVjdH0gZnJvbSAncmVhY3QnO1xyXG5pbXBvcnQgKiBhcyBhcGkgZnJvbSAnLi4vLi4vLi4vYXBpL2FwaSc7XHJcbmNvbnN0IExlYXVnZXMgPSAoe3VzZXJpbmZvfSkgPT4ge1xyXG4gICAgY29uc3QgW21hdGNobGlzdHMsIHNldE1hdGNobGlzdHNdID0gdXNlU3RhdGUoJycpO1xyXG4gICAgY29uc3QgW21hdGNoZXMsIHNldE1hdGNoZXNdID0gdXNlU3RhdGUoJycpO1xyXG4gICAgY29uc3QgbWF0Y2hBcnJheSA9IHVzZVN0YXRlKFtdKTtcclxuICAgIGNvbnN0IGdldE1hdGNoZXMgPSAobWF0Y2hlcykgPT4ge1xyXG4gICAgICAgIG1hdGNoZXMubWFwKHYgPT4ge1xyXG4gICAgICAgICAgICBhcGkuZ2V0bWF0Y2hlcyh2LmdhbWVJZClcclxuICAgICAgICAgICAgLnRoZW4ocmVzcG9uc2UgPT4gbWF0Y2hBcnJheS5wdXNoKHJlc3BvbnNlLmRhdGEpKVxyXG4gICAgICAgICAgICAuY2F0Y2goZXJyb3IgPT4gY29uc29sZS5sb2coZXJyb3IpKVxyXG4gICAgICAgIH0pXHJcbiAgICAgICAgc2V0TWF0Y2hlcyhtYXRjaEFycmF5KTtcclxuICAgIH1cclxuICAgIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICAgICAgYXBpLmdldG1hdGNobGlzdHModXNlcmluZm8uYWNjb3VudElkKVxyXG4gICAgICAgIC50aGVuKHJlc3BvbnNlID0+IHtcclxuICAgICAgICAgICAgc2V0TWF0Y2hsaXN0cyhyZXNwb25zZS5kYXRhLm1hdGNoZXMpXHJcbiAgICAgICAgICAgIHJldHVybiBnZXRNYXRjaGVzKHJlc3BvbnNlLmRhdGEubWF0Y2hlcyk7XHJcbiAgICAgICAgfSlcclxuICAgICAgICAuY2F0Y2goZXJyb3IgPT4gY29uc29sZS5sb2coZXJyb3IpKVxyXG4gICAgfSxbdXNlcmluZm9dKVxyXG4gICAgY29uc29sZS5sb2cobWF0Y2hsaXN0cywgbWF0Y2hlcylcclxuICAgIHJldHVybiAoXHJcbiAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJHYW1lSXRlbUxpc3RcIj5cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiR2FtZUl0ZW1XcmFwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJHYW1lSXRlbSBXaW5cIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJDb250ZW50XCI+XHJcblxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPHN0eWxlIGpzeCBnbG9iYWw+XHJcbiAgICAgICAgICAgICAgICB7YFxyXG4gICAgICAgICAgICAgICAgICAgIC5HYW1lSXRlbVdyYXAge1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDNweDtcclxuICAgICAgICAgICAgICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogOHB4O1xyXG4gICAgICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgICAgICAuR2FtZUl0ZW0ge1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IG5vbmU7XHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAgIC5HYW1lSXRlbS5XaW4gPiAuQ29udGVudCB7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHRhYmxlLWxheW91dDogZml4ZWQ7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNhM2NmZWM7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJvcmRlci1jb2xvcjogIzk5YjljZjtcclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgLkdhbWVJdGVtID4gLkNvbnRlbnQge1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNwbGF5OiB0YWJsZTtcclxuICAgICAgICAgICAgICAgICAgICAgICAgd2lkdGg6IDY4OXB4O1xyXG4gICAgICAgICAgICAgICAgICAgICAgICBoZWlnaHQ6IDk3cHg7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGJvcmRlci1jb2xsYXNlOiBjb2xsYXBzZTtcclxuICAgICAgICAgICAgICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgI2NkZDJkMjtcclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICBgfVxyXG4gICAgICAgICAgICA8L3N0eWxlPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgKTtcclxufVxyXG5cclxuZXhwb3J0IGRlZmF1bHQgTGVhdWdlczsiXX0= */\n/*@ sourceURL=D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\components\\Summoner\\Leagues\\Leagues.js */"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Leauges);
@@ -1842,7 +1910,7 @@ const Summoner = () => {
     },
     __self: undefined
   }), __jsx(_components_Summoner_Leagues__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    leagueEntriesInfo: leagueEntriesInfo,
+    userinfo: userinfo,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 41

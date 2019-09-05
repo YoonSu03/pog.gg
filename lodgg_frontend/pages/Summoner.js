@@ -38,7 +38,7 @@ const Summoner = () => {
             <LolLayout/>
             <Header userinfo={userinfo}/>
             <Tier leagueEntriesInfo={leagueEntriesInfo}/>
-            <Leagues leagueEntriesInfo={leagueEntriesInfo}/>
+            <Leagues userinfo={userinfo}/>
         </div>
     );
 }

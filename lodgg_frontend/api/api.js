@@ -21,3 +21,17 @@ export function getleagueSecond(leagueId) {
         }
     })
 }
+export function getmatchlists(encryptedSummonerId) {
+    return axios.get(address+"/matchlists", {
+        params: {
+            encryptedSummonerId: encryptedSummonerId
+        }
+    })
+}
+export function getmatches(matchId) {
+    return axios.get(address+"/matches", {
+        params: {
+            matchId: matchId
+        }
+    })
+}
