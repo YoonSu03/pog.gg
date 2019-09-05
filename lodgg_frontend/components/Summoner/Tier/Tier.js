@@ -2,17 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Tierinfo from '../Tierinfo';
 import * as api from '../../../api/api';
 
-const Body = ({userinfo}) => {
-    const [leaugeinfo, setLeagueinfo] = useState('');
-    useEffect(() => {
-        api.getleague(userinfo.id)
-        .then(response => setLeagueinfo(response.data))
-        .catch(error => console.log(error))
-    }, [userinfo])
+const Body = ({leagueEntriesInfo}) => {
     return(
         <div className="rank_wrapper">
             {
-                leaugeinfo && leaugeinfo.map((data, i) => {
+                leagueEntriesInfo && leagueEntriesInfo  .map((data, i) => {
                     if(data.queueType === "RANKED_SOLO_5x5") {
                         console.log("solo")
                         return (

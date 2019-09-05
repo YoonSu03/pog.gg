@@ -7,10 +7,17 @@ export function getInfo(name) {
         }
     })
 }
-export function getleague(encryptedSummonerId) {
-    return axios.get(address+"/userleague", {
+export function getleagueFirst(encryptedSummonerId) {
+    return axios.get(address+"/userleaguesFirst", {
         params: {
             encryptedSummonerId: encryptedSummonerId
+        }
+    })
+}
+export function getleagueSecond(leagueId) {
+    return axios.get(address+"/userleaguesSecond", {
+        params: {
+            leagueId: leagueId
         }
     })
 }

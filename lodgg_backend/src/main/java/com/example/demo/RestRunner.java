@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin(origins = "*")
 @RestController
 public class RestRunner {
-    String api_key = "RGAPI-5831e675-9b6a-4863-8cc2-8de270e04162";
+    String api_key = "RGAPI-ec059a51-675e-4709-8f2e-085291d867de";
     @Autowired
     RestTemplateBuilder restTemplateBuilder;
 
@@ -26,7 +26,7 @@ public class RestRunner {
         return helloResult;
     }
     @GetMapping("/userleaguesFirst")
-    public String userleagueFirst(@RequestParam String encryptedSummonerId) throws InterruptedException {
+    public String userleaguesFirst(@RequestParam String encryptedSummonerId) throws InterruptedException {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/" + encryptedSummonerId +  "?api_key=" + api_key, String.class);
         System.out.println(helloResult);
@@ -34,7 +34,7 @@ public class RestRunner {
         return helloResult;
     }
     @GetMapping("/userleaguesSecond")
-    public String userleagueSecond(@RequestParam String leagueId) throws InterruptedException {
+    public String userleaguesSecond(@RequestParam String leagueId) throws InterruptedException {
         RestTemplate restTemplate = restTemplateBuilder.build();
         String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/" + leagueId +  "?api_key=" + api_key, String.class);
         System.out.println(helloResult);

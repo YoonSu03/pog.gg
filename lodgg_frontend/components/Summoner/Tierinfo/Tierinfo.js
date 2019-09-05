@@ -60,9 +60,9 @@ const Tierinfo = ({key, name, data}) => {
             return (<img src="https://poro.gg/images/lol/tier/challenger_1.png"/>)
         }
     }
-    console.log(data);
+    console.log(key);
     return (
-        <div key={key} className="rank">
+        <div className="rank">
             <div className="TierImage">
                 {
                     imageFilter(data.tier, data.rank)

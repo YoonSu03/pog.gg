@@ -6187,7 +6187,7 @@ function connect(options) {
       error.name = err.name;
       error.stack = err.stack; // __NEXT_DIST_DIR is provided by webpack
 
-      (0, _sourceMapSupport.rewriteStacktrace)(error, "D:\\ReactProject\\javaproject\\realproject\\.next");
+      (0, _sourceMapSupport.rewriteStacktrace)(error, "D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\.next");
       return error;
     }
   };
