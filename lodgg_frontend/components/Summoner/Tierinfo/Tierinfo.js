@@ -2,7 +2,17 @@ import React from 'react';
 
 const Tierinfo = ({key, name, data}) => {
     const imageFilter = (tier, rank) => {
-        if(tier === "BRONZE") {
+        if(tier === "IRON") {
+            if(rank === "IV") {
+                return (<img src="https://poro.gg/images/lol/tier/iron_4.png"/>)
+            } else if(rank === "III") {
+                return (<img src="https://poro.gg/images/lol/tier/iron_3.png"/>)
+            } else if(rank === "II") {
+                return (<img src="https://poro.gg/images/lol/tier/iron_2.png"/>)
+            } else if(rank === "I") {
+                return (<img src="https://poro.gg/images/lol/tier/iron_1.png"/>)
+            } 
+        } else if(tier === "BRONZE") {
             if(rank === "IV") {
                 return (<img src="https://poro.gg/images/lol/tier/bronze_4.png"/>)
             } else if(rank === "III") {
@@ -60,7 +70,6 @@ const Tierinfo = ({key, name, data}) => {
             return (<img src="https://poro.gg/images/lol/tier/challenger_1.png"/>)
         }
     }
-    console.log(key);
     return (
         <div className="rank">
             <div className="TierImage">

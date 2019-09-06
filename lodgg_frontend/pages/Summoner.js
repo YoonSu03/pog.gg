@@ -32,7 +32,6 @@ const Summoner = () => {
     useEffect(() => {
         getInfo()
     },[name])
-    console.log(userinfo, leagueEntriesInfo)
     return (
         <div>   
             <LolLayout/>

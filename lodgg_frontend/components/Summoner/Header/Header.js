@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Header = ({userinfo}) => {
-    console.log(userinfo)
     const profileicon = `https://ddragon.leagueoflegends.com/cdn/9.17.1/img/profileicon/${userinfo.profileIconId}.png`
     return (
         <>

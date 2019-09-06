@@ -3,14 +3,16 @@ import * as api from '../../../api/api';
 const Leauges = ({userinfo}) => {
     const [matchlists, setMatchlists] = useState('');
     const [matches, setMatches] = useState('');
-    const matchArray = useState([]);
-    const getMatches = (matches) => {
-        matches.map(v => {
+    let matchArray = [];
+    const getMatches = async(matches) => {
+        await matches.map(v => {
             api.getmatches(v.gameId)
-            .then(response => matchArray.push(response.data))
+            .then(async(response) => {
+                matchArray.push(response.data);
+            })
             .catch(error => console.log(error))
         })
-        setMatches(matchArray);
+        setMatches(matchArray)
     }
     useEffect(() => {
         api.getmatchlists(userinfo.accountId)
@@ -20,67 +22,17 @@ const Leauges = ({userinfo}) => {
         })
         .catch(error => console.log(error))
     },[userinfo])
-    console.log(matchlists, matches)
+    console.log(matches)
     return (
-        <div>
+        <div className="GameContents">
             <div className="GameItemList">
-                <div className="GameItemWrap">
-                    <div className="GameItem Win">
-                        <div className="Content">
-                            <div className="GameStats">
-                                <div className="GameType">일반</div>
-                                <div className="TimeStamp"><span>5시간전</span></div>
-                                <div className="Bar"></div>
-                                <div className="GameResult">승리</div>
-                                <div className="GameLength">29분 55초</div>
-                            </div>
-                            <div className="GameSettingInfo">
-                                <div className="ChampionImage"><a><img src="https://opgg-static.akamaized.net/images/lol/champion/LeeSin.png?image=w_46&v=1"/></a></div>
-                                <div className="SummonerSpell">
-                                    <div className="Spell">
-                                        <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
-                                    </div>
-                                    <div className="Spell">
-                                        <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
-                                    </div>
-                                </div>
-                                <div className="Runes">
-                                    <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
-                                    <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
-                                </div>
-                                <div className="ChampionName">
-                                    <a>리신</a>
-                                </div>
-                            </div>
-                            
-                            <div className="KDA">
-                                <div className="KDA">
-                                    <span className="Kill">16</span>
-                                    /
-                                    <span className="Death">6</span>
-                                    /
-                                    <span className="Assist">4</span>
-                                </div>
-                                <div className="KDARatio">
-                                    <span className="KDARatio">3.33:1</span>
-                                    평점
-                                </div>
-                            </div>
-                            <div className="Stats">
-                                <div className="Level">레벨16</div>
-                                <div className="CS"><span>178 (5.9)</span> CS</div>
-                                <div class="CKRate tip tpd-delegation-uid-1">
-                                    킬관여 61%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {
+                   console.log(matches[0])
+                }
             </div>
             <style jsx global>
                 {`
                     .GameItemWrap {
-                        position: relative;
                         border-radius: 3px;
                         margin-bottom: 8px;
                     }
@@ -215,6 +167,97 @@ const Leauges = ({userinfo}) => {
                     }
                     .GameItem>.Content>.KDA>.KDARatio .KDARatio {
                         color: #353a3a;
+                    }
+                    .GameItem>.Content>.Items {
+                        font-size: 0;
+                    }
+                    .GameItem>.Content>div {
+                        display: table-cell;
+                        height: 96px;
+                        vertical-align: middle;
+                    }
+                    .GameItem>.Content>.Items .ItemList {
+                        width: 96px;
+                        margin: 0 auto;
+                    }
+                    .GameItem.Win>.Content>.Items>.ItemList>.Item {
+                        background-color: #99b9cf;
+                    }
+                    .GameItem>.Content>.Items .Item {
+                        display: inline-block;
+                        width: 22px;
+                        height: 22px;
+                        border-radius: 3px;
+                        margin-top: 2px;
+                        margin-right: 2px;
+                        overflow: hidden;
+                    }
+                    .GameItem>.Content>.Items .Item>.Image {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .GameItem>.Content>.Items .Trinket {
+                        margin-top: 7px;
+                        color: #353a3a;
+                        line-height: 13px;
+                        font-size: 11px;
+                        text-align: center;
+                    }
+                    .GameItem>.Content>.Items .Trinket img {
+                        vertical-align: middle;
+                    }
+                    .GameItem>.Content>.FollowPlayers {
+                        width: 170px;
+                        font-size: 0;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team {
+                        float: left;
+                        width: 50%;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner {
+                        display: block;
+                        width: 80px;
+                        height: 18px;
+                        margin-left: 3px;
+                        text-align: left;
+                        white-space: nowrap;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner>.ChampionImage {
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 3px;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner>.ChampionImage img{
+                        width: 16px;
+                        height: 16px;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner>.SummonerName {
+                        display: inline-block;
+                        max-width: 60px;
+                        vertical-align: middle;
+                        font-size: 11px;
+                        color: #555;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner>.SummonerName>.Link {
+                        display: block;
+                        color: inherit;
+                        text-decoration: none;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                    .GameItem>.Content>.FollowPlayers.Names>.Team>.Summoner.Requester>.SummonerName>.Link {
+                        color: #222;
+                    }
+                    .GameItem>.Content>.Stats {
+                        width: 90px;
+                        font-size: 11px;
+                        text-align: center;
+                        line-height: 18px;
+                        color: #555e5e;
+                    }
+                    .GameItem>.Content>.Stats>.CKRate {
+                        color: #c6443e;
                     }
                 `}
             </style>
