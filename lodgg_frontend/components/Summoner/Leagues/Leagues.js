@@ -1,34 +1,138 @@
 import React, {useState, useEffect} from 'react';
 import * as api from '../../../api/api';
-const Leauges = ({userinfo}) => {
-    const [matchlists, setMatchlists] = useState('');
-    const [matches, setMatches] = useState('');
-    let matchArray = [];
-    const getMatches = async(matches) => {
-        await matches.map(v => {
-            api.getmatches(v.gameId)
-            .then(async(response) => {
-                matchArray.push(response.data);
-            })
-            .catch(error => console.log(error))
-        })
-        setMatches(matchArray)
+const Leauges = ({matchList, matchesData}) => {
+    let GameType = "";
+    const setName = (v, i) => {
+        const data = matchList.matches[i];
+        console.log(data)
+        if(v.gameMode === "CLASSIC") {GameType="일반"}
     }
-    useEffect(() => {
-        api.getmatchlists(userinfo.accountId)
-        .then(response => {
-            setMatchlists(response.data.matches)
-            return getMatches(response.data.matches);
-        })
-        .catch(error => console.log(error))
-    },[userinfo])
-    console.log(matches)
     return (
         <div className="GameContents">
             <div className="GameItemList">
                 {
-                   console.log(matches[0])
+                    matchesData.map((v,i) => {
+                        setName(v, i)
+                        console.log(i)
+                        return (
+                            <div key={i} className="GameItemWrap">
+                                <div className="GameItem Win">
+                                    <div className="Content">
+                                        <div className="GameStats">
+                                            <div className="GameType">{GameType}</div>
+                                            <div className="TimeStamp"><span>5시간전</span></div>
+                                            <div className="Bar"></div>
+                                            <div className="GameResult">승리</div>
+                                            <div className="GameLength">29분 55초</div>
+                                        </div>
+                                        <div className="GameSettingInfo">
+                                            <div className="ChampionImage"><a><img src="https://opgg-static.akamaized.net/images/lol/champion/LeeSin.png?image=w_46&v=1"/></a></div>
+                                            <div className="SummonerSpell">
+                                                <div className="Spell">
+                                                    <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
+                                                </div>
+                                                <div className="Spell">
+                                                    <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
+                                                </div>
+                                            </div>
+                                            <div className="Runes">
+                                                <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
+                                                <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
+                                            </div>
+                                            <div className="ChampionName">
+                                                <a>리신</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="KDA">
+                                            <div className="KDA">
+                                                <span className="Kill">16</span>
+                                                /
+                                                <span className="Death">6</span>
+                                                /
+                                                <span className="Assist">4</span>
+                                            </div>
+                                            <div className="KDARatio">
+                                                <span className="KDARatio">3.33:1</span>
+                                                평점
+                                            </div>
+                                        </div>
+                                        <div className="Stats">
+                                            <div className="Level">레벨16</div>
+                                            <div className="CS"><span>178 (5.9)</span> CS</div>
+                                            <div class="CKRate tip tpd-delegation-uid-1">
+                                                킬관여 61%
+                                            </div>
+                                        </div>
+                                        <div className="Items">
+                                            <div className="ItemList">
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3077.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3078.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3075.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3080.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3081.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3082.png?image=w_22&v=1"/></div>
+                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3083.png?image=w_22&v=1"/></div>
+                                            </div>
+                                            <div className="Trinket">
+                                                <img src="https://opgg-static.akamaized.net/images/site/summoner/icon-ward-blue.png"/>
+                                                제어와드
+                                                <span className="wards vision">9</span>
+                                            </div>
+                                        </div>                 
+                                        <div className="FollowPlayers Names">
+                                            <div className="Team">
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner Requester">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                            </div>
+                                            <div className="Team">
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                                <div className="Summoner">
+                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
+                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })
                 }
+                
             </div>
             <style jsx global>
                 {`

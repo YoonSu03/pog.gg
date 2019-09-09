@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tierinfo = ({key, name, data}) => {
+const Tierinfo = ({index, name, data}) => {
     const imageFilter = (tier, rank) => {
         if(tier === "IRON") {
             if(rank === "IV") {
@@ -71,7 +71,7 @@ const Tierinfo = ({key, name, data}) => {
         }
     }
     return (
-        <div className="rank">
+        <div key={index} className="rank">
             <div className="TierImage">
                 {
                     imageFilter(data.tier, data.rank)

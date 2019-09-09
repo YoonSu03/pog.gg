@@ -6,18 +6,18 @@ const Body = ({leagueEntriesInfo}) => {
     return(
         <div className="rank_wrapper">
             {
-                leagueEntriesInfo && leagueEntriesInfo.map((data, i) => {
+                leagueEntriesInfo && leagueEntriesInfo.map((data, index) => {
                     if(data.queueType === "RANKED_SOLO_5x5") {
                         return (
-                            <Tierinfo key={i} name="솔로랭크" data={data}/>
+                            <Tierinfo key={index} index={index} name="솔로랭크" data={data}/>
                         );
                     } else if(data.queueType === "RANKED_TFT") {
                         return (
-                            <Tierinfo key={i} name="롤토체스" data={data}/>
+                            <Tierinfo key={index} index={index} name="롤토체스" data={data}/>
                         );
                     } else if(data.queueType === "RANKED_FLEX_SR") {
                         return (
-                            <Tierinfo key={i} name="자유랭크" data={data}/>
+                            <Tierinfo key={index} index={index} name="자유랭크" data={data}/>
                         );
                     }
                 })
