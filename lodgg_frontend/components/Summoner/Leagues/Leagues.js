@@ -1,32 +1,59 @@
 import React, {useState, useEffect} from 'react';
 import * as api from '../../../api/api';
-const Leauges = ({matchList, matchesData}) => {
-    let GameType = "";
-    const setName = (v, i) => {
-        const data = matchList.matches[i];
-        console.log(data)
-        if(v.gameMode === "CLASSIC") {GameType="일반"}
+const Leauges = ({name, matchList, matchesData}) => {
+    const getparticipantId = (match) => {
+        let participantId = 0;
+        match.participantIdentities.map(v => {
+            if((v.player.summonerName).toLowerCase() == name.toLowerCase()) {
+                participantId = v.participantId;
+            }
+        })
+        return participantId;
     }
     return (
         <div className="GameContents">
             <div className="GameItemList">
                 {
                     matchesData.map((v,i) => {
-                        setName(v, i)
-                        console.log(i)
+                        let match = matchList.matches[i]
+                        //console.log(match)
+                        //console.log(v);
+                        let gamemode = "";
+                        let gameMinute = 0;
+                        let gameSecond = 0;
+                        let isWin = "패배";
+                        console.log(getparticipantId(v))
+                        //타임스탬프 판별
+                        
+                        //게임 모드 판별
+                        if(v.queueId === 420) {
+                            gamemode = "솔로랭크";
+                        } else if(v.queueId === 430) {
+                            gamemode = "일반게임";
+                        } else if(v.queueId === 440) {
+                            gamemode = "자유랭크";
+                        }
+                        if(v.teams[1].win === "Win") {
+                            isWin = "승리";
+                        } else if(v.teams[1].win === "Fail") {
+                            isWin = "패배";
+                        }
+                        // 게임 길이 판별
+                        gameMinute = Math.floor((v.gameDuration / 60))
+                        gameSecond = Math.floor((v.gameDuration % 60))
                         return (
                             <div key={i} className="GameItemWrap">
                                 <div className="GameItem Win">
                                     <div className="Content">
                                         <div className="GameStats">
-                                            <div className="GameType">{GameType}</div>
+                                            <div className="GameType">{gamemode}</div>
                                             <div className="TimeStamp"><span>5시간전</span></div>
                                             <div className="Bar"></div>
-                                            <div className="GameResult">승리</div>
-                                            <div className="GameLength">29분 55초</div>
+                                            <div className="GameResult">{isWin}</div>
+                                            <div className="GameLength">{gameMinute}분 {gameSecond}초</div>
                                         </div>
                                         <div className="GameSettingInfo">
-                                            <div className="ChampionImage"><a><img src="https://opgg-static.akamaized.net/images/lol/champion/LeeSin.png?image=w_46&v=1"/></a></div>
+                                            <div className="ChampionImage"><a><img src={`http://z.fow.kr/champ/${match.champion}_64.png`}/></a></div>
                                             <div className="SummonerSpell">
                                                 <div className="Spell">
                                                     <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
@@ -197,11 +224,9 @@ const Leauges = ({matchList, matchesData}) => {
                         border-radius: 50%;
                         overflow: hidden;
                     }
-                    .GameItem>.Content>.GameSettingInfo>.ChampionImage .Image {
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        background: #000;
+                    .GameItem>.Content>.GameSettingInfo>.ChampionImage img {
+                        width: 46px;
+                        height: 46px;
                     }
                     .GameItem>.Content>.GameSettingInfo>.SummonerSpell {
                         display: inline-block;

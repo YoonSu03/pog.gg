@@ -35,7 +35,6 @@ const Summoner = () => {
                 api.getmatches(v.gameId)
                 .then((response) => {
                     setMatchesdata(matchesData => matchesData.concat(response.data));
-                    console.log(matchesData)
                 })
                 .catch(error => console.log(error))
             })
@@ -47,7 +46,7 @@ const Summoner = () => {
             <LolLayout/>
             <Header userinfo={userinfo}/>
             <Tier leagueEntriesInfo={leagueEntriesInfo}/>
-            <Leagues matchList={matchlist} matchesData={matchesData}/>
+            <Leagues name={name} matchList={matchlist} matchesData={matchesData}/>
         </div>
     );
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin(origins = "*")
 @RestController
 public class RestRunner {
-    String api_key = "RGAPI-fa4743cc-1607-48c5-a940-f04850947e49";
+    String api_key = "RGAPI-40a61624-6764-47b6-ac29-04b6d5d5c55c";
     @Autowired
     RestTemplateBuilder restTemplateBuilder;
 
@@ -44,7 +44,7 @@ public class RestRunner {
     @GetMapping("/matches")
     public String matches(@RequestParam String matchId) throws InterruptedException {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/match/v4/matches/" + matchId +  "?api_key=" + api_key, String.class);
+        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/match/v4/matches/" + matchId + "?api_key=" + api_key, String.class);
         System.out.println(helloResult);
 
         return helloResult;
