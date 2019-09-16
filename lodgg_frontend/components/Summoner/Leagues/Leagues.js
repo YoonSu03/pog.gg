@@ -51,164 +51,165 @@ const Leauges = ({name, matchList, matchesData}) => {
         return returnData;
     }
     return (
-        <div className="GameContents">
-            <div className="GameItemList">
-                {
-                    matchesData.map((v,i) => {
-                        let match = matchList.matches.find(item => item.gameId === v.gameId);
-                        let participantIdentitie = v.participantIdentities.find(item => item.player.summonerName.toLowerCase() == name.toLowerCase())
-                        let participant = v.participants.find(item => item.participantId === participantIdentitie.participantId)
-                        const playerStat = participant.stats;
-                        //console.log(match)
-                        //console.log(v);
-                        let gamemode = "";
-                        let gameMinute = 0;
-                        let gameSecond = 0;
-                        let isWin = "";
-                        let time = getTimestamp(match.timestamp);
-                        //let participantId = getparticipantId(v)
-                        //let userInfo = v.participants[participantId-1]
-                        console.log(v, match, participantIdentitie, participant)
-                        //타임스탬프 판별
-                        
-                        //게임 모드 판별
-                        if(v.queueId === 420) {
-                            gamemode = "솔로랭크";
-                        } else if(v.queueId === 430) {
-                            gamemode = "일반게임";
-                        } else if(v.queueId === 440) {
-                            gamemode = "자유랭크";
-                        }
-                        if(v.teams[1].win === "Win") {
-                            isWin = "승리";
-                        } else if(v.teams[1].win === "Fail") {
-                            isWin = "패배";
-                        }
-                        // 게임 길이 판별
-                        gameMinute = Math.floor((v.gameDuration / 60))
-                        gameSecond = Math.floor((v.gameDuration % 60))
-                        //게임 승리 판별
-                        if(participant.stats.win) {
-                            isWin = "Win";
-                        } else {
-                            isWin = "Lose";
-                        }
-                        return (
-                            <div key={i} className="GameItemWrap">
-                                <div className={`GameItem ` + `${isWin}`}>
-                                    <div className="Content">
-                                        <div className="GameStats">
-                                            <div className="GameType">{gamemode}</div>
-                                            <div className="TimeStamp"><span>{time}</span></div>
-                                            <div className="Bar"></div>
-                                            <div className="GameResult">{isWin}</div>
-                                            <div className="GameLength">{gameMinute}분 {gameSecond}초</div>
-                                        </div>
-                                        <div className="GameSettingInfo">
-                                            <div className="ChampionImage"><a><img src={`http://z.fow.kr/champ/${match.champion}_64.png`}/></a></div>
-                                            <div className="SummonerSpell">
-                                                <div className="Spell">
-                                                    <img src={`http://z.fow.kr/spell/${participant.spell1Id}.png`}/>
-                                                </div>
-                                                <div className="Spell">
-                                                    <img src={`http://z.fow.kr/spell/${participant.spell2Id}.png`}/>
-                                                </div>
+        <div className="GameItemList">
+            {
+                matchesData.map((v,i) => {
+                    let match = matchList.matches.find(item => item.gameId === v.gameId);
+                    let participantIdentitie = v.participantIdentities.find(item => item.player.summonerName.toLowerCase() == name.toLowerCase())
+                    let participant = v.participants.find(item => item.participantId === participantIdentitie.participantId)
+                    const playerStat = participant.stats;
+                    //console.log(match)
+                    //console.log(v);
+                    let gamemode = "";
+                    let gameMinute = 0;
+                    let gameSecond = 0;
+                    let isWin = "";
+                    let time = getTimestamp(match.timestamp);
+                    //let participantId = getparticipantId(v)
+                    //let userInfo = v.participants[participantId-1]
+                    console.log(v, match, participantIdentitie, participant)
+                    //타임스탬프 판별
+                    
+                    //게임 모드 판별
+                    if(v.queueId === 420) {
+                        gamemode = "솔로랭크";
+                    } else if(v.queueId === 430) {
+                        gamemode = "일반게임";
+                    } else if(v.queueId === 440) {
+                        gamemode = "자유랭크";
+                    }
+                    if(v.teams[1].win === "Win") {
+                        isWin = "승리";
+                    } else if(v.teams[1].win === "Fail") {
+                        isWin = "패배";
+                    }
+                    // 게임 길이 판별
+                    gameMinute = Math.floor((v.gameDuration / 60))
+                    gameSecond = Math.floor((v.gameDuration % 60))
+                    //게임 승리 판별
+                    if(participant.stats.win) {
+                        isWin = "Win";
+                    } else {
+                        isWin = "Lose";
+                    }
+                    return (
+                        <div key={i} className="GameItemWrap">
+                            <div className={`GameItem ` + `${isWin}`}>
+                                <div className="Content">
+                                    <div className="GameStats">
+                                        <div className="GameType">{gamemode}</div>
+                                        <div className="TimeStamp"><span>{time}</span></div>
+                                        <div className="Bar"></div>
+                                        <div className="GameResult">{isWin}</div>
+                                        <div className="GameLength">{gameMinute}분 {gameSecond}초</div>
+                                    </div>
+                                    <div className="GameSettingInfo">
+                                        <div className="ChampionImage"><a><img src={`http://z.fow.kr/champ/${match.champion}_64.png`}/></a></div>
+                                        <div className="SummonerSpell">
+                                            <div className="Spell">
+                                                <img src={`http://z.fow.kr/spell/${participant.spell1Id}.png`}/>
                                             </div>
-                                            <div className="Runes">
-                                                <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perk0}.png?v=3`}/></div>
-                                                <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perkSubStyle}.png?v=3`}/></div>
+                                            <div className="Spell">
+                                                <img src={`http://z.fow.kr/spell/${participant.spell2Id}.png`}/>
                                             </div>
                                         </div>
-                                        
+                                        <div className="Runes">
+                                            <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perk0}.png?v=3`}/></div>
+                                            <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perkSubStyle}.png?v=3`}/></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="KDA">
                                         <div className="KDA">
-                                            <div className="KDA">
-                                                <span className="Kill">{playerStat.kills}</span>
-                                                /
-                                                <span className="Death">{playerStat.deaths}</span>
-                                                /
-                                                <span className="Assist">{playerStat.assists}</span>
+                                            <span className="Kill">{playerStat.kills}</span>
+                                            /
+                                            <span className="Death">{playerStat.deaths}</span>
+                                            /
+                                            <span className="Assist">{playerStat.assists}</span>
+                                        </div>
+                                        <div className="KDARatio">
+                                            <span className="KDARatio">{
+                                                    playerStat.deaths === 0 ? "Perfect" : ((participant.stats.kills + participant.stats.assists) / participant.stats.deaths).toFixed(2)
+                                                }</span>
+                                            평점
+                                        </div>
+                                    </div>
+                                    <div className="Stats">
+                                        <div className="Level">레벨{playerStat.champLevel}</div>
+                                        <div className="CS"><span>{playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled} ({((playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled)/gameMinute).toFixed(1)})</span> CS</div>
+                                        <div class="CKRate tip tpd-delegation-uid-1">
+                                            킬관여 61%
+                                        </div>
+                                    </div>
+                                    <div className="Items">
+                                        <div className="ItemList">
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item0}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item1}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item2}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item6}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item3}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item4}.png`}/></div>
+                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item5}.png`}/></div>                                              
+                                        </div>
+                                    </div>                 
+                                    <div className="FollowPlayers Names">
+                                        <div className="Team">
+                                            <div className="Summoner">
+                                                <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[0].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[0].player.summonerName}</a></div>
                                             </div>
-                                            <div className="KDARatio">
-                                                <span className="KDARatio">{
-                                                        playerStat.deaths === 0 ? "Perfect" : ((participant.stats.kills + participant.stats.assists) / participant.stats.deaths).toFixed(2)
-                                                    }</span>
-                                                평점
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[1].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[1].player.summonerName}</a></div>
+                                            </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[2].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[2].player.summonerName}</a></div>
+                                            </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[3].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[3].player.summonerName}</a></div>
+                                            </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[4].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[4].player.summonerName}</a></div>
                                             </div>
                                         </div>
-                                        <div className="Stats">
-                                            <div className="Level">레벨{playerStat.champLevel}</div>
-                                            <div className="CS"><span>{playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled} ({((playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled)/gameMinute).toFixed(1)})</span> CS</div>
-                                            <div class="CKRate tip tpd-delegation-uid-1">
-                                                킬관여 61%
+                                        <div className="Team">
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[5].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[5].player.summonerName}</a></div>
                                             </div>
-                                        </div>
-                                        <div className="Items">
-                                            <div className="ItemList">
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item0}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item1}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item2}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item6}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item3}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item4}.png`}/></div>
-                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item5}.png`}/></div>                                              
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[6].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[6].player.summonerName}</a></div>
                                             </div>
-                                        </div>                 
-                                        <div className="FollowPlayers Names">
-                                            <div className="Team">
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner Requester">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[7].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[7].player.summonerName}</a></div>
                                             </div>
-                                            <div className="Team">
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
-                                                <div className="Summoner">
-                                                    <div className="ChampionImage"><img src="https://ddragon.leagueoflegends.com/cdn/9.17.1/img/champion/Irelia.png"/></div>
-                                                    <div className="SummonerName"><a className="Link" href="#">임헌우</a></div>
-                                                </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[8].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[8].player.summonerName}</a></div>
+                                            </div>
+                                            <div className="Summoner">
+                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[9].championId}_64.png`}/></div>
+                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[9].player.summonerName}</a></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        )
-                    })
-                }
-                
-            </div>
-            <style jsx global>
+                        </div>
+                    )
+                })
+            }
+                        <style jsx global>
                 {`
+                    .GameContents {
+                        width: 700px;
+                        height: 700px;
+                    }
                     .GameItemWrap {
                         border-radius: 3px;
                         margin-bottom: 8px;
@@ -327,7 +328,6 @@ const Leauges = ({name, matchList, matchesData}) => {
                         width: 100%;
                         height: 100%;
                         border-radius: 50%;
-
                     }
                     .GameItem>.Content>.GameSettingInfo>.ChampionName {
                         margin-top: 8px;

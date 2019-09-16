@@ -7,13 +7,13 @@ import { useRouter } from 'next/router';
 import * as api from '../api/api';
 
 const Summoner = () => {
+    
     const [userinfo, setUserinfo] = useState('');
     const [leagueEntriesInfo, setLeagueEntriesfirst] = useState('');
     const [matchlist, setMatchlist] = useState('');
     const [matchesData, setMatchesdata] = useState([]);
     const router = useRouter();
     const { name } = router.query
-
     useEffect(() => {
         const fetchUserinfo = async () => {
             const result = await api.getInfo(name)
@@ -34,7 +34,9 @@ const Summoner = () => {
             matchlist.matches.map(v => {
                 api.getmatches(v.gameId)
                 .then((response) => {
-                    setMatchesdata(matchesData => matchesData.concat(response.data));
+                    setMatchesdata(matchesData => matchesData.concat(response.data).sort((a,b) => {
+                        return a.gameCreation > b.gameCreation ? -1 : a.gameCreation < b.gameCreation ? 1 : 0;
+                    }));
                 })
                 .catch(error => console.log(error))
             })
@@ -45,8 +47,36 @@ const Summoner = () => {
         <div>   
             <LolLayout/>
             <Header userinfo={userinfo}/>
-            <Tier leagueEntriesInfo={leagueEntriesInfo}/>
-            <Leagues name={name} matchList={matchlist} matchesData={matchesData}/>
+            <div className="InfoTop">
+                <div className="InfoContents">
+                    <div className="InfoTier">
+                        <Tier leagueEntriesInfo={leagueEntriesInfo}/>
+                    </div>
+                    <div className="GameContents">
+                        <Leagues name={name} matchList={matchlist} matchesData={matchesData}/>
+                    </div>
+                </div>
+            </div>
+            <style jsx global>
+                {`
+                    .InfoTop {
+                        width: 100vw;
+                        height: 700px;
+                    }
+                    .InfoContents {
+                        width: 60vw;
+                        margin: 0 auto;
+                    }
+                    .InfoTier {
+                        float: left;
+                    }
+                    .GameContents {
+                        padding-top: 40px;
+                        padding-left: 20px;
+                        float: left;
+                    }
+                `}
+            </style>
         </div>
     );
 }

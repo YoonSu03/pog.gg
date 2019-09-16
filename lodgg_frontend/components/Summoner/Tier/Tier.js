@@ -28,9 +28,7 @@ const Body = ({leagueEntriesInfo}) => {
                 {`
                     .rank_wrapper {
                         padding-top: 40px;
-                        width: 1100px;
-                        height: 130px;
-                        margin: 0 auto;
+                        width: 300px;
                     }
                 `}
             </style>
