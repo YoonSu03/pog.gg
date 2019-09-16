@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as api from '../../../api/api';
+import {GetGameData} from '../../lib';
 const Leauges = ({name, matchList, matchesData}) => {
     const getparticipantId = (match) => {
         let participantId = 0;
@@ -65,9 +66,14 @@ const Leauges = ({name, matchList, matchesData}) => {
                     let gameSecond = 0;
                     let isWin = "";
                     let time = getTimestamp(match.timestamp);
+                    let gameData = GetGameData;
+                    let champData = gameData.getChampData(match.champion);
+                    let spellData1 = gameData.getSpellUrl(participant.spell1Id);
+                    let spellData2 = gameData.getSpellUrl(participant.spell2Id);
                     //let participantId = getparticipantId(v)
                     //let userInfo = v.participants[participantId-1]
                     console.log(v, match, participantIdentitie, participant)
+                    console.log(champData)
                     //타임스탬프 판별
                     
                     //게임 모드 판별
@@ -104,34 +110,34 @@ const Leauges = ({name, matchList, matchesData}) => {
                                         <div className="GameLength">{gameMinute}분 {gameSecond}초</div>
                                     </div>
                                     <div className="GameSettingInfo">
-                                        <div className="ChampionImage"><a><img src={`http://z.fow.kr/champ/${match.champion}_64.png`}/></a></div>
+                                        <div className="ChampionImage"><a><img src={champData}/></a></div>
                                         <div className="SummonerSpell">
                                             <div className="Spell">
-                                                <img src={`http://z.fow.kr/spell/${participant.spell1Id}.png`}/>
+                                                <img src={spellData1}/>
                                             </div>
                                             <div className="Spell">
-                                                <img src={`http://z.fow.kr/spell/${participant.spell2Id}.png`}/>
+                                                <img src={spellData2}/>
                                             </div>
                                         </div>
                                         <div className="Runes">
-                                            <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perk0}.png?v=3`}/></div>
-                                            <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perkSubStyle}.png?v=3`}/></div>
+                                            <div className="Rune"><img src={`https://opgg-static.akamaized.net/images/lol/perk/${playerStat.perk0}.png?image=w_22&v=1`}/></div>
+                                            <div className="Rune"><img src={`https://opgg-static.akamaized.net/images/lol/perkStyle/${playerStat.perkSubStyle}.png?image=w_22&v=2`}/></div>
                                         </div>
                                     </div>
                                     
                                     <div className="KDA">
                                         <div className="KDA">
                                             <span className="Kill">{playerStat.kills}</span>
-                                            /
+                                            {' '}/{' '}
                                             <span className="Death">{playerStat.deaths}</span>
-                                            /
+                                            {' '}/{' '}
                                             <span className="Assist">{playerStat.assists}</span>
                                         </div>
                                         <div className="KDARatio">
                                             <span className="KDARatio">{
                                                     playerStat.deaths === 0 ? "Perfect" : ((participant.stats.kills + participant.stats.assists) / participant.stats.deaths).toFixed(2)
                                                 }</span>
-                                            평점
+                                            {' '}  평점
                                         </div>
                                     </div>
                                     <div className="Stats">
@@ -143,57 +149,57 @@ const Leauges = ({name, matchList, matchesData}) => {
                                     </div>
                                     <div className="Items">
                                         <div className="ItemList">
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item0}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item1}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item2}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item6}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item3}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item4}.png`}/></div>
-                                            <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item5}.png`}/></div>                                              
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item0)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item1)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item2)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item6)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item3)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item4)}/></div>
+                                            <div className="Item"><img src={gameData.getItemUrl(participant.stats.item5)}/></div>                                            
                                         </div>
                                     </div>                 
                                     <div className="FollowPlayers Names">
                                         <div className="Team">
                                             <div className="Summoner">
-                                                <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[0].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[0].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[0].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[1].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[1].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[1].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[2].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[2].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[2].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[3].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[3].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[3].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[4].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[4].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[4].player.summonerName}</a></div>
                                             </div>
                                         </div>
                                         <div className="Team">
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[5].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[5].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[5].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[6].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[6].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[6].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[7].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[7].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[7].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[8].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[8].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[8].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
-                                            <div className="ChampionImage"><img src={`http://z.fow.kr/champ/${v.participants[9].championId}_64.png`}/></div>
+                                                <div className="ChampionImage"><img src={gameData.getChampData(v.participants[9].championId)}/></div>
                                                 <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[9].player.summonerName}</a></div>
                                             </div>
                                         </div>
@@ -241,6 +247,9 @@ const Leauges = ({name, matchList, matchesData}) => {
                         font-size: 11px;
                         color: #555;
                         line-height: 16px;
+                    }
+                    .GameItem > .Content > .GameStats > .GameResult{
+                        font-weight: bold;
                     }
                     .GameItem > .Content > div {
                         display: table-cell;
@@ -344,6 +353,7 @@ const Leauges = ({name, matchList, matchesData}) => {
                     }
                     .GameItem>.Content>.KDA {
                         font-size: 11px;
+                        font-weight: bold;
                         text-align: center;
                     }
                     .GameItem>.Content>.KDA>.KDA {
@@ -456,7 +466,7 @@ const Leauges = ({name, matchList, matchesData}) => {
                     }
                     .GameItem>.Content>.Stats {
                         width: 90px;
-                        font-size: 11px;
+                        font-size: 13px;
                         text-align: center;
                         line-height: 18px;
                         color: #555e5e;
