@@ -10,19 +10,65 @@ const Leauges = ({name, matchList, matchesData}) => {
         })
         return participantId;
     }
+    const getTimestamp = (ts) => {
+        let returnData = "";
+        var writeDay = new Date(ts);
+        var nowtimestamp = new Date().getTime();
+        var now = new Date(nowtimestamp);
+
+        var minus;
+        if(now.getFullYear() > writeDay.getFullYear()){
+            minus= now.getFullYear()-writeDay.getFullYear();
+            returnData = minus+"년 전";
+        }else if(now.getMonth() > writeDay.getMonth()){
+            minus= now.getMonth()-writeDay.getMonth();
+            returnData =minus+"달 전";
+        }else if(now.getDate() > writeDay.getDate()){
+            minus= now.getDate()-writeDay.getDate();
+            returnData = minus+"일 전";
+        }else if(now.getDate() == writeDay.getDate()){
+            var nowTime = now.getTime();
+            var writeTime = writeDay.getTime();
+
+            if(nowTime>writeTime){
+                let sec = parseInt(nowTime - writeTime) / 1000;
+                let day  = parseInt(sec/60/60/24);
+                sec = (sec - (day * 60 * 60 * 24));
+                let hour = parseInt(sec/60/60);
+                sec = (sec - (hour*60*60));
+                let min = parseInt(sec/60);
+                sec = parseInt(sec-(min*60));
+
+                if(hour>0){
+                    returnData = hour+"시간 전";
+                }else if(min>0){
+                    returnData = min+"분 전";
+                }else if(sec>0){
+                    returnData = sec+"초 전";
+                }
+            }
+        }
+        return returnData;
+    }
     return (
         <div className="GameContents">
             <div className="GameItemList">
                 {
                     matchesData.map((v,i) => {
-                        let match = matchList.matches[i]
+                        let match = matchList.matches.find(item => item.gameId === v.gameId);
+                        let participantIdentitie = v.participantIdentities.find(item => item.player.summonerName.toLowerCase() == name.toLowerCase())
+                        let participant = v.participants.find(item => item.participantId === participantIdentitie.participantId)
+                        const playerStat = participant.stats;
                         //console.log(match)
                         //console.log(v);
                         let gamemode = "";
                         let gameMinute = 0;
                         let gameSecond = 0;
-                        let isWin = "패배";
-                        console.log(getparticipantId(v))
+                        let isWin = "";
+                        let time = getTimestamp(match.timestamp);
+                        //let participantId = getparticipantId(v)
+                        //let userInfo = v.participants[participantId-1]
+                        console.log(v, match, participantIdentitie, participant)
                         //타임스탬프 판별
                         
                         //게임 모드 판별
@@ -41,13 +87,19 @@ const Leauges = ({name, matchList, matchesData}) => {
                         // 게임 길이 판별
                         gameMinute = Math.floor((v.gameDuration / 60))
                         gameSecond = Math.floor((v.gameDuration % 60))
+                        //게임 승리 판별
+                        if(participant.stats.win) {
+                            isWin = "Win";
+                        } else {
+                            isWin = "Lose";
+                        }
                         return (
                             <div key={i} className="GameItemWrap">
-                                <div className="GameItem Win">
+                                <div className={`GameItem ` + `${isWin}`}>
                                     <div className="Content">
                                         <div className="GameStats">
                                             <div className="GameType">{gamemode}</div>
-                                            <div className="TimeStamp"><span>5시간전</span></div>
+                                            <div className="TimeStamp"><span>{time}</span></div>
                                             <div className="Bar"></div>
                                             <div className="GameResult">{isWin}</div>
                                             <div className="GameLength">{gameMinute}분 {gameSecond}초</div>
@@ -56,55 +108,49 @@ const Leauges = ({name, matchList, matchesData}) => {
                                             <div className="ChampionImage"><a><img src={`http://z.fow.kr/champ/${match.champion}_64.png`}/></a></div>
                                             <div className="SummonerSpell">
                                                 <div className="Spell">
-                                                    <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
+                                                    <img src={`http://z.fow.kr/spell/${participant.spell1Id}.png`}/>
                                                 </div>
                                                 <div className="Spell">
-                                                    <img src="https://opgg-static.akamaized.net/images/lol/spell/SummonerSmite.png?image=w_22&v=15354684000"/>
+                                                    <img src={`http://z.fow.kr/spell/${participant.spell2Id}.png`}/>
                                                 </div>
                                             </div>
                                             <div className="Runes">
-                                                <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
-                                                <div className="Rune"><img src="https://opgg-static.akamaized.net/images/lol/perk/8010.png?image=w_22&v=1"/></div>
-                                            </div>
-                                            <div className="ChampionName">
-                                                <a>리신</a>
+                                                <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perk0}.png?v=3`}/></div>
+                                                <div className="Rune"><img src={`http://z.fow.kr/img/perk/${playerStat.perkSubStyle}.png?v=3`}/></div>
                                             </div>
                                         </div>
                                         
                                         <div className="KDA">
                                             <div className="KDA">
-                                                <span className="Kill">16</span>
+                                                <span className="Kill">{playerStat.kills}</span>
                                                 /
-                                                <span className="Death">6</span>
+                                                <span className="Death">{playerStat.deaths}</span>
                                                 /
-                                                <span className="Assist">4</span>
+                                                <span className="Assist">{playerStat.assists}</span>
                                             </div>
                                             <div className="KDARatio">
-                                                <span className="KDARatio">3.33:1</span>
+                                                <span className="KDARatio">{
+                                                        playerStat.deaths === 0 ? "Perfect" : ((participant.stats.kills + participant.stats.assists) / participant.stats.deaths).toFixed(2)
+                                                    }</span>
                                                 평점
                                             </div>
                                         </div>
                                         <div className="Stats">
-                                            <div className="Level">레벨16</div>
-                                            <div className="CS"><span>178 (5.9)</span> CS</div>
+                                            <div className="Level">레벨{playerStat.champLevel}</div>
+                                            <div className="CS"><span>{playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled} ({((playerStat.totalMinionsKilled + playerStat.neutralMinionsKilled)/gameMinute).toFixed(1)})</span> CS</div>
                                             <div class="CKRate tip tpd-delegation-uid-1">
                                                 킬관여 61%
                                             </div>
                                         </div>
                                         <div className="Items">
                                             <div className="ItemList">
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3077.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3078.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3075.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3080.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3081.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3082.png?image=w_22&v=1"/></div>
-                                                <div className="Item"><img src="https://opgg-static.akamaized.net/images/lol/item/3083.png?image=w_22&v=1"/></div>
-                                            </div>
-                                            <div className="Trinket">
-                                                <img src="https://opgg-static.akamaized.net/images/site/summoner/icon-ward-blue.png"/>
-                                                제어와드
-                                                <span className="wards vision">9</span>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item0}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item1}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item2}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item6}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item3}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item4}.png`}/></div>
+                                                <div className="Item"><img src={`http://z.fow.kr/items3/${participant.stats.item5}.png`}/></div>                                              
                                             </div>
                                         </div>                 
                                         <div className="FollowPlayers Names">
@@ -176,6 +222,11 @@ const Leauges = ({name, matchList, matchesData}) => {
                         background-color: #a3cfec;
                         border-color: #99b9cf;
                     }
+                    .GameItem.Lose > .Content {
+                        table-layout: fixed;
+                        background-color: #E2B6B3;
+                        border-color: #99b9cf;
+                    }
                     .GameItem > .Content {
                         display: table;
                         width: 689px;
@@ -206,7 +257,21 @@ const Leauges = ({name, matchList, matchesData}) => {
                         font-size: inherit;
                         cursor: help;
                     }
+                    .GameItem.Lose>.Content>.GameStats>.Bar {
+                        display: block;
+                        width: 27px;
+                        margin: 5px auto;
+                        height: 2px;
+                        background: #cea7a7;
+                    }
+                    .GameItem.Lose>.Content>.GameStats>.GameResult {
+                        color: #c6443e;;
+                    }
                     .GameItem.Win>.Content>.GameStats>.Bar {
+                        display: block;
+                        width: 27px;
+                        margin: 5px auto;
+                        height: 2px;
                         background: #99b9cf;
                     }
                     .GameItem.Win>.Content>.GameStats>.GameResult {
@@ -233,6 +298,11 @@ const Leauges = ({name, matchList, matchesData}) => {
                         vertical-align: middle;
                         margin-left: 4px;
                     }
+                    .GameItem>.Content>.GameSettingInfo>.SummonerSpell img{
+                        width: 22px;
+                        height: 22px;
+                        margin-top: 2px;
+                    }
                     .GameItem>.Content>.GameSettingInfo>.SummonerSpell>.Spell:first-child {
                         margin-left: 0;
                     }
@@ -249,13 +319,15 @@ const Leauges = ({name, matchList, matchesData}) => {
                     .GameItem>.Content>.GameSettingInfo>.Runes>.Rune:first-child {
                         margin-top: 0;
                     }
-                    .GameItem>.Content>.GameSettingInfo>.Runes>.Rune:first-child>.Image {
+                    .GameItem>.Content>.GameSettingInfo>.Runes>.Rune:first-child>img {
                         background: #000;
                     }
-                    .GameItem>.Content>.GameSettingInfo>.Runes>.Rune {
-                        width: 22px;
-                        height: 22px;
-                        margin-top: 2px;
+                    .GameItem>.Content>.GameSettingInfo>.Runes>.Rune img{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+
                     }
                     .GameItem>.Content>.GameSettingInfo>.ChampionName {
                         margin-top: 8px;
@@ -320,6 +392,10 @@ const Leauges = ({name, matchList, matchesData}) => {
                         margin-top: 2px;
                         margin-right: 2px;
                         overflow: hidden;
+                    }
+                    .GameItem>.Content>.Items .Item img{
+                        width: 22px;
+                        height: 22px;
                     }
                     .GameItem>.Content>.Items .Item>.Image {
                         width: 100%;

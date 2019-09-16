@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin(origins = "*")
 @RestController
 public class RestRunner {
-    String api_key = "RGAPI-40a61624-6764-47b6-ac29-04b6d5d5c55c";
+    String api_key = "RGAPI-50ec5a65-4189-4e23-8f67-0b5f6598a30f";
     @Autowired
     RestTemplateBuilder restTemplateBuilder;
 
