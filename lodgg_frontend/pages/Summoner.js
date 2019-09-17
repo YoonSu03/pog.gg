@@ -46,7 +46,7 @@ const Summoner = () => {
     return (
         <div>   
             <LolLayout/>
-            <Header userinfo={userinfo}/>
+            <Header matchlist={matchlist} userinfo={userinfo}/>
             <div className="InfoTop">
                 <div className="InfoContents">
                     <div className="InfoTier">

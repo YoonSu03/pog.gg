@@ -1,39 +1,51 @@
-import React from 'react';
-
-const Header = ({userinfo}) => {
+import React, {useState, useEffect} from 'react';
+import Prefer from '../Prefer';
+const Header = ({matchlist, userinfo}) => {
     const profileicon = `https://ddragon.leagueoflegends.com/cdn/9.17.1/img/profileicon/${userinfo.profileIconId}.png`
     return (
         <>
             <div className="Summoner_Header">
                 <div className="Summoner_Header_Wrapper">
-                    <div className="Summoner_Header_Style">
-                        <div className="Summoner_Header_img">
-                            <img className="profile" src={profileicon}/>
+                    <div className="Summoner_Info">
+                        <div className="Summoner_Header_Style">
+                            <div className="Summoner_Header_img">
+                                <img className="profile" src={profileicon}/>
+                            </div>
+                        </div>
+                        <div className="Summoner_Header_Userinfo">
+                            <div className="PastRank">
+                                <ul>
+                                    <li>
+                                        <b>S7</b>
+                                        &nbsp;  Gold
+                                    </li>
+                                    <li>
+                                        <b>S8</b>
+                                        &nbsp;  Diamond
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="Summoner_rank">래더랭킹 95,769위 (상위2.753%)</div>
+                            <div class="Summoner_name">{userinfo.name}</div>
                         </div>
                     </div>
-                    <div className="Summoner_Header_Userinfo">
-                        <div className="PastRank">
-                            <ul>
-                                <li>
-                                    <b>S7</b>
-                                    &nbsp;  Gold
-                                </li>
-                                <li>
-                                    <b>S8</b>
-                                    &nbsp;  Diamond
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="Summoner_rank">래더랭킹 95,769위 (상위2.753%)</div>
-                        <div class="Summoner_name">{userinfo.name}</div>
-                    </div>   
+                    <div className="Summoner_Prefer">   
+                        <Prefer matchlist={matchlist}/>
+                    </div>
                 </div>
+                
             </div>
+            
             <style jsx global>
                 {`
                     .Summoner_Header {
                         border-bottom: 1px solid #c6cbcb;
                         height: 220px;
+                    }
+                    .Summoner_Info {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
                     .Summoner_Header_Wrapper {
                         display: flex;
@@ -43,9 +55,6 @@ const Header = ({userinfo}) => {
                         height:100%;
                     }
                     .Summoner_Header_Style {
-                        
-                        
-                        
                         background: linear-gradient(rgb(194, 158, 82) 0px, rgb(122, 90, 38) 88%, rgb(168, 132, 73));
                         border-radius: 100%;
                         padding: 1px;
@@ -86,6 +95,10 @@ const Header = ({userinfo}) => {
                         color: #242929;
                         font-size: 30px;
                         font-weight: bold;
+                    }
+                    .Summoner_Prefer {
+                        padding-left: 350px;
+                        width: 100px;
                     }
                 `}
             </style> 
