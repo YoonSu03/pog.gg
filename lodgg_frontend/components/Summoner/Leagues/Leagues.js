@@ -162,45 +162,45 @@ const Leauges = ({name, matchList, matchesData}) => {
                                         <div className="Team">
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[0].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[0].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link" href={`/summoner?name=${v.participantIdentities[0].player.summonerName}`}>{v.participantIdentities[0].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[1].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[1].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link" href={`/summoner?name=${v.participantIdentities[1].player.summonerName}`}>{v.participantIdentities[1].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[2].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[2].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[2].player.summonerName}`}>{v.participantIdentities[2].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[3].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[3].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link" href={`/summoner?name=${v.participantIdentities[3].player.summonerName}`}>{v.participantIdentities[3].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[4].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[4].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[4].player.summonerName}`}>{v.participantIdentities[4].player.summonerName}</a></div>
                                             </div>
                                         </div>
                                         <div className="Team">
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[5].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[5].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[5].player.summonerName}`}>{v.participantIdentities[5].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[6].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[6].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[6].player.summonerName}`}>{v.participantIdentities[6].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[7].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[7].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[7].player.summonerName}`}>{v.participantIdentities[7].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[8].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[8].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[8].player.summonerName}`}>{v.participantIdentities[8].player.summonerName}</a></div>
                                             </div>
                                             <div className="Summoner">
                                                 <div className="ChampionImage"><img src={gameData.getChampData(v.participants[9].championId)}/></div>
-                                                <div className="SummonerName"><a className="Link" href="#">{v.participantIdentities[9].player.summonerName}</a></div>
+                                                <div className="SummonerName"><a className="Link"  href={`/summoner?name=${v.participantIdentities[9].player.summonerName}`}>{v.participantIdentities[9].player.summonerName}</a></div>
                                             </div>
                                         </div>
                                     </div>
