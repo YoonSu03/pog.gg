@@ -41,7 +41,13 @@ const Summoner = () => {
                 .catch(error => console.log(error))
             })
         }
+        const fetchLeagueExp = async () => {
+            let result;
+            result = await api.getleagueExp("BRONZE")
+            console.log(result.data)
+        }
         fetchUserinfo();
+        fetchLeagueExp();
     },[name])
     return (
         <div>   

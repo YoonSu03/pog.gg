@@ -13,19 +13,21 @@ const Header = ({matchlist, userinfo}) => {
                             </div>
                         </div>
                         <div className="Summoner_Header_Userinfo">
-                            <div className="PastRank">
-                                <ul>
-                                    <li>
-                                        <b>S7</b>
-                                        &nbsp;  Gold
-                                    </li>
-                                    <li>
-                                        <b>S8</b>
-                                        &nbsp;  Diamond
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="Summoner_rank">래더랭킹 95,769위 (상위2.753%)</div>
+                            {/*<>
+                                <div className="PastRank">
+                                    <ul>
+                                        <li>
+                                            <b>S7</b>
+                                            &nbsp;  Gold
+                                        </li>
+                                        <li>
+                                            <b>S8</b>
+                                            &nbsp;  Diamond
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="Summoner_rank">래더랭킹 95,769위 (상위2.753%)</div>
+                            </>*/}
                             <div class="Summoner_name">{userinfo.name}</div>
                         </div>
                     </div>
@@ -43,6 +45,7 @@ const Header = ({matchlist, userinfo}) => {
                         height: 220px;
                     }
                     .Summoner_Info {
+                        width: 400px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -50,7 +53,7 @@ const Header = ({matchlist, userinfo}) => {
                     .Summoner_Header_Wrapper {
                         display: flex;
                         align-items: center;
-                        width: 1100px;
+                        width: 1200px;
                         margin: 0 auto; 
                         height:100%;
                     }
@@ -91,14 +94,14 @@ const Header = ({matchlist, userinfo}) => {
                         font-size: 13px;
                     }
                     .Summoner_name {
+                        line-height: 80px;
                         padding-top: 10px;
                         color: #242929;
                         font-size: 30px;
                         font-weight: bold;
                     }
                     .Summoner_Prefer {
-                        padding-left: 350px;
-                        width: 100px;
+                        width: 650px;   
                     }
                 `}
             </style> 

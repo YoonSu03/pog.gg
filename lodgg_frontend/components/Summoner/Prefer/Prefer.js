@@ -78,28 +78,30 @@ const Prefer = ({matchlist}) => {
             <style jsx glboal>
                 {`
                     .Prefer {
-                        width: 340px;
+                        background-color: #f0f0f0;
+                        float: right;
+                        width: 400px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        color: #666;
+                        border: 1px solid #cdd2d2;
                     }
                     .PreferLane {
                         display: flex;
                         flex-direction: column;
-                        width: 170px;
+                        width: 200px;
                         height: 150px;
                         padding: 16px 0 14px 20px;
                         line-height: 14px;
                         font-size: 14px;
                         color: #666;
-                        border-left: 1px solid #cdd2d2;
                     }
                     .PreferChamp {
-                        margin-left: 50px;
                         padding-left: 30px;
                         display: flex;
                         flex-direction: column;
-                        width: 170px;
+                        width: 200px;
                         height: 150px;
                         padding: 16px 0 14px 20px;
                         line-height: 14px;
@@ -107,6 +109,7 @@ const Prefer = ({matchlist}) => {
                         color: #666;
                         border-left: 1px solid #cdd2d2;
                     }
+    
                     .PreferLane_Info {
                         margin-top: 60px;
                         display: flex;

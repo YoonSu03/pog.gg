@@ -49,4 +49,12 @@ public class RestRunner {
 
         return helloResult;
     }
+    @GetMapping("/leagueExp")
+    public String leagueExp(@RequestParam String tier) throws InterruptedException {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        String helloResult = restTemplate.getForObject("https://kr.api.riotgames.com/lol/league-exp/v4/entries/RANKED_SOLO_5x5/" + tier + "/I?api_key=" + api_key, String.class);
+        System.out.println(helloResult);
+
+        return helloResult;
+    }
 }
