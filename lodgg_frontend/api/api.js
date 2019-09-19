@@ -42,3 +42,10 @@ export function getleagueExp(tier) {
         }
     })
 }
+export function getesportsMatches(leagueId) {
+    return axios.get(address+"/esportsMatch", {
+        params: {
+            leagueId: leagueId
+        }
+    })
+}

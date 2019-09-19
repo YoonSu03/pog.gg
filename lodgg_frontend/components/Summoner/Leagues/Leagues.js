@@ -85,6 +85,8 @@ const Leauges = ({name, matchList, matchesData}) => {
                         gamemode = "자유랭크";
                     } else if(v.queueId === 450) {
                         gamemode = "무작위 총력전";
+                    } else if(v.queueId > 800 && v.queueId < 900) {
+                        gamemode = "봇전";
                     }
                     if(v.teams[1].win === "Win") {
                         isWin = "승리";

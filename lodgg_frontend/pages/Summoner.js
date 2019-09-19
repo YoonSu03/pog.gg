@@ -12,6 +12,7 @@ const Summoner = () => {
     const [leagueEntriesInfo, setLeagueEntriesfirst] = useState('');
     const [matchlist, setMatchlist] = useState('');
     const [matchesData, setMatchesdata] = useState([]);
+    const [loading, SetLoading] = useState(false);
     const router = useRouter();
     const { name } = router.query
     useEffect(() => {
@@ -27,6 +28,7 @@ const Summoner = () => {
         }
         const fetchMatchlist = async (userinfo) => {
             const result = await api.getmatchlists(userinfo.accountId)
+            console.log(result)
             setMatchlist(result.data)
             fetchMatchdata(result.data)
         }
@@ -37,32 +39,34 @@ const Summoner = () => {
                     setMatchesdata(matchesData => matchesData.concat(response.data).sort((a,b) => {
                         return a.gameCreation > b.gameCreation ? -1 : a.gameCreation < b.gameCreation ? 1 : 0;
                     }));
+                    SetLoading(true)
                 })
                 .catch(error => console.log(error))
             })
         }
-        const fetchLeagueExp = async () => {
-            let result;
-            result = await api.getleagueExp("BRONZE")
-            console.log(result.data)
+        const esportsMatch = async () => {
+            const result = await api.getesportsMatches("293")
+            console.log(result)
         }
         fetchUserinfo();
-        fetchLeagueExp();
+        esportsMatch();
     },[name])
     return (
         <div>   
             <LolLayout/>
-            <Header matchlist={matchlist} userinfo={userinfo}/>
-            <div className="InfoTop">
-                <div className="InfoContents">
-                    <div className="InfoTier">
-                        <Tier leagueEntriesInfo={leagueEntriesInfo}/>
-                    </div>
-                    <div className="GameContents">
-                        <Leagues name={name} matchList={matchlist} matchesData={matchesData}/>
+            {loading === true ? <>
+                <Header matchlist={matchlist} userinfo={userinfo}/>
+                <div className="InfoTop">
+                    <div className="InfoContents">
+                        <div className="InfoTier">
+                            <Tier leagueEntriesInfo={leagueEntriesInfo}/>
+                        </div>
+                        <div className="GameContents">
+                            <Leagues name={name} matchList={matchlist} matchesData={matchesData}/>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </> : <div className="loading"><img src="/static/loading_img.gif"/></div>}
             <style jsx global>
                 {`
                     .InfoTop {
@@ -80,6 +84,17 @@ const Summoner = () => {
                         padding-top: 40px;
                         padding-left: 20px;
                         float: left;
+                    }
+                    .loading {
+                        margin-top: 100px;
+                        width: 100vw;
+                        display:flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .loading > img{
+                        width: 200px;
+                        height: 100px;
                     }
                 `}
             </style>

@@ -4,6 +4,7 @@ const Prefer = ({matchlist}) => {
     const [preferData,  SetPreferdata] = useState("");
     let name = "";
     let playcount = 0;
+    let playChamp = 0;
     useEffect(() => {
         if(matchlist){
             SetPreferdata(GetGameData.getPreferData(matchlist.matches));
@@ -13,7 +14,7 @@ const Prefer = ({matchlist}) => {
         if(lane.preferLane !== undefined) {
             console.log(lane.preferLane)
             if(lane.preferLane.lane === "TOP") {
-                playcount=lane.preferLane.playCount;
+                playcount=lane.preferLane.playCount / lane.rankCount * 100;
                 name="탑";
                 return <img className="Lane_Image" style={{width:"50px" , height:"50px"}} src="https://poro.gg/images/lol/role/top.svg"/>
             } else if(lane.preferLane.lane === "MID") {
@@ -38,6 +39,7 @@ const Prefer = ({matchlist}) => {
     }
     const getPreferChamp = (champ) => {
         if(champ.preferChamp !== undefined) {
+            playChamp = preferData.preferChamp.length / preferData.rankCount * 100;
             let champData = GetGameData.getChampData(champ.preferChamp[0]);
             return champData;
         }
@@ -59,7 +61,7 @@ const Prefer = ({matchlist}) => {
                         }
                         <div className="PreferLane_SubInfo">
                             <span className="name">{name}</span>
-                            <span className="RoleRate"><b>{playcount}</b>%</span>
+                            <span className="RoleRate"><b>{playcount.toFixed(0)}</b>%</span>
                         </div>
                     </div>
             </div>
@@ -72,6 +74,7 @@ const Prefer = ({matchlist}) => {
                     
                     <div className="PreferLane_SubInfo">
                             <span className="name">{getPreferName(preferData)}</span>
+                            <span className="RoleRate"><b>{playChamp.toFixed(0)}</b>%</span>
                     </div>
                     </div>
             </div>

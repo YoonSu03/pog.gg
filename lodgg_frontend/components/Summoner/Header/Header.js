@@ -28,7 +28,7 @@ const Header = ({matchlist, userinfo}) => {
                                 </div>
                                 <div class="Summoner_rank">래더랭킹 95,769위 (상위2.753%)</div>
                             </>*/}
-                            <div class="Summoner_name">{userinfo.name}</div>
+                            <div className="Summoner_name">{userinfo.name}</div>
                         </div>
                     </div>
                     <div className="Summoner_Prefer">   
