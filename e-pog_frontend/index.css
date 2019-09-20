@@ -4,6 +4,12 @@
 body {
     margin: 0;
     font-family: Spoqa Han Sans,Spoqa Han Sans JP,"Sans-serif","sans-serif",Apple SD Gothic Neo,Helvetica Neue,Arial;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+img, svg {
+    vertical-align: middle;
 }
 a, a:hover {
     text-decoration: none;
@@ -12,10 +18,13 @@ a, a:hover {
     display: inline-block;
 }
 .Gilroy {
-    font-weight: 900;
+    font-weight: 700;
 }
 .float-right {
     float: right!important;
+}
+.FluidContainer {
+    background-color: #1e2025;
 }
 .Navigation {
     clear: both;
@@ -68,14 +77,13 @@ a, a:hover {
     color: #01d1b2;
     padding-top: .4rem;
 }
+
 .LeagueSelector {
-    background-color: rgba(39,40,45,.95);
+    background-color: #27282d;
     cursor: pointer;
     user-select: none;
 }
-.FluidContainer {
-    background-color: #1e2025;
-}
+
 .container-fluid {
     width: 100%;
     padding-right: 15px;
@@ -85,4 +93,155 @@ a, a:hover {
 }
 .LeagueSelector .container {
     position: relative;
+}
+.TournamentSymbol {
+    padding-bottom: .625rem;
+    border-bottom: 2px solid transparent;
+}
+.TournamentSymbol__image {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-top: .625rem;
+    vertical-align: top;
+}
+.TournamentSymbol__badge, .TournamentSymbol__label {
+    margin-left: .625rem;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: .625rem;
+    line-height: 2.5rem;
+}
+.LeagueBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+    opacity: .3;
+    pointer-events: none;
+}
+.Intro {
+    background-color: #1e2025;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+.Title {
+    font-size: 1.875px;
+    font-size: 1.875rem;
+    position: relative;
+    padding-top: 1rem;
+    color: #fbfbfb;
+    text-transform: uppercase;
+}
+.Title__squares {
+    font-size: 0;
+    position: absolute;
+    top: 0;
+}
+.Title__square {
+    display: inline-block;
+    vertical-align: top;
+    width: 10px;
+    height: 8px;
+    margin-right: 2px;
+    background-color: #db0442;
+}
+.Title__square.small {
+    width: 8px;
+}
+.LeagueTeams {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.LeagueTeams__link {
+    margin-bottom: 1.25rem;
+    display: inline-block;
+}
+.LeagueSelector .container {
+    position: relative;
+}
+.LeagueTeams__link:not(:last-child) {
+    margin-right: 1.25rem;
+}
+.TeamSymbol.large {
+    width: 5rem;
+    height: 5rem;
+}
+.LeagueTeams__team {
+    text-align: center;
+    background-color: #fff;
+    width: 4.6875rem!important;
+    height: 4.6875rem!important;
+}
+.TeamSymbol {
+    display: inline-block;
+    width: 3.75rem;
+    height: 3.75rem;
+    position: relative;
+    margin: 0;
+}
+.TeamSymbol:not(.circleless) {
+    border: 1px solid #d8d8d8;
+    border-radius: 50%;
+    background-color: #fbfbfb;
+}
+.TeamSymbol__image {
+    width: 100%;
+    height: 100%;
+    -webkit-transform: scale(.7);
+    transform: scale(.7);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+.TeamSymbol__acronym {
+    margin-top: .625rem;
+    display: inline-block;
+    color: #5b5c64;
+}
+.Intro__section {
+    margin-bottom: 2.5rem;
+}
+.LiveStreams__container {
+    margin-right: -.625rem;
+}
+.LiveStreams__streaming {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 1.25rem;
+    margin-right: .625rem;
+    width: calc(20% - .625rem);
+}
+.LiveStreams__streaming__thumbnail {
+    width: 100%;
+    height: auto;
+    margin-bottom: .5rem;
+}
+.PlayerIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: cover;
+    border-radius: 50%;
+    margin: 0;
+}
+.PlayerIcon.small {
+    width: 1.875rem;
+    height: 1.875rem;
+}
+.LiveStreams__streaming__playerName {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin-left: .5rem;
+    top: .2rem;
+    color: #fbfbfb;
+}
+.LiveStreams__streaming__playerIcon {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid #d8d8d8;
 }
