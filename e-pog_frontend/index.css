@@ -82,6 +82,16 @@ td {
     color: #01d1b2;
     padding-top: .4rem;
 }
+.Menus__login:hover {
+    -webkit-animation:login   0.3s ease 1;
+    -webkit-animation-fill-mode:both
+}
+@-webkit-keyframes login{
+    100%{
+        border-color: #16776A;
+        color:  #16776A;
+    }
+}
 
 .LeagueSelector {
     background-color: #27282d;
@@ -181,10 +191,19 @@ td {
     background-color: #fff;
     width: 4.6875rem!important;
     height: 4.6875rem!important;
-    -webkit-transition: -webkit-transform .15s;
-    transition: -webkit-transform .15s;
-    transition: transform .15s;
-    transition: transform .15s,-webkit-transform .15s;
+    
+}
+.LeagueTeams__team:hover {
+    -webkit-animation:team   0.3s ease 1;
+    -webkit-animation-fill-mode:both
+}
+@-webkit-keyframes team{
+    0%{
+        -webkit-transform: scale(1.0, 1.0)
+    }
+    100%{
+        -webkit-transform: scale(1.1, 1.1)
+    }
 }
 .TeamSymbol {
     display: inline-block;
@@ -337,6 +356,19 @@ td {
     -webkit-transition: top .15s;
     transition: top .15s;
     background-color: #db0442;
+}
+.ScoreBoard__overlay :hover {
+    -webkit-animation:overlay  0.3s ease 1;
+    -webkit-animation-fill-mode:both
+}
+@-webkit-keyframes overlay{
+    100%{
+        transition: top .15s;
+        transition-property: top;
+        transition-duration: 0.15s;
+        transition-timing-function: ease;
+        transition-delay: 0s;
+    }
 }
 .MatchBar__team__line {
     margin: 0 1.5625rem;
