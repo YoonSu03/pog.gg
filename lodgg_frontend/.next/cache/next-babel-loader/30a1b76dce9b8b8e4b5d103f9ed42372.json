@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Prefer';","map":{"version":3,"sources":["D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\components\\Summoner\\Prefer\\index.js"],"names":["default"],"mappings":"AAAA,SAAQA,OAAR,QAAsB,UAAtB","sourcesContent":["export {default} from './Prefer';"]},"metadata":{},"sourceType":"module"}

@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Tierinfo';","map":{"version":3,"sources":["D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\components\\Summoner\\Tierinfo\\index.js"],"names":["default"],"mappings":"AAAA,SAAQA,OAAR,QAAsB,YAAtB","sourcesContent":["export {default} from './Tierinfo';"]},"metadata":{},"sourceType":"module"}

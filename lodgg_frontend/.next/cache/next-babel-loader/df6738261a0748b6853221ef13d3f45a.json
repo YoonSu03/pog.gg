@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from './Leagues';","map":{"version":3,"sources":["D:\\ReactProject\\javaproject\\lod.gg\\lodgg_frontend\\components\\Summoner\\Leagues\\index.js"],"names":["default"],"mappings":"AAAA,SAAQA,OAAR,QAAsB,WAAtB","sourcesContent":["export {default} from './Leagues';"]},"metadata":{},"sourceType":"module"}
