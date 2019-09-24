@@ -94,7 +94,7 @@ const Summoner = () => {
                     }
                     .loading > img{
                         width: 200px;
-                        height: 100px;
+                        height: 100px; 
                     }
                 `}
             </style>
