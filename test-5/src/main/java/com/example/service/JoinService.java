@@ -15,7 +15,13 @@ public class JoinService {
 	
 	public String joinUser(String userId, String userPw, String userName) {
 		
+		Users user= new Users();
+		user = usersRepository.findByUserid(userId);
+		
 		if(userId.equals("")||userPw.equals("")||userName.equals("")) {
+			return "join";
+		}
+		else if(user != null) {
 			return "join";
 		}
 			

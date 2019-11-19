@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,13 +71,11 @@ public class UsersController {
 		return jwt; //토큰객체로 반환
 	}
 
-	//토큰 받아서 유저객체로 반환
 	@PostMapping(value = "/tokenRequest")
-	public Users tokenRequest( @RequestBody Co_Token param) throws InvalidJwtAuthenticationException {
+	public Users tokenRequest(@RequestHeader (value = "token")String token ) throws InvalidJwtAuthenticationException {
 		Users user= new Users();
-		System.out.println("////////////////////////////////////////");
-		//System.out.println(param.getToken());
-		user = param.verifyToken();//객체 반환
+		Co_Token i = new Co_Token();
+		user = i.verifyToken(token);//객체 반환
 		return user;
 	}
 

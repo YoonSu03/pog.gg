@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import com.example.service.Freeboard.FreeboardListService;
+
 import com.example.model.Freeboard;
+import com.example.service.Borad.FreeboardListService;
+
 import javax.servlet.http.HttpSession;
 
 @CrossOrigin
@@ -27,10 +29,6 @@ public class MainController {
 	@Autowired
 	private HttpSession session;
 	
-	private int returnIntValue(String stringToInt) {
-		return Integer.parseInt(stringToInt);
-	}
-
 		@RequestMapping(value="/")
 		public String index() {
 			System.out.println("!");
@@ -56,10 +54,6 @@ public class MainController {
 		
 		
 		
-		@GetMapping("/freeboardWritePage")
-		public String freeboardWritePage() {
-			return "freeboardWrite";
-		}
 		
 		
 	}

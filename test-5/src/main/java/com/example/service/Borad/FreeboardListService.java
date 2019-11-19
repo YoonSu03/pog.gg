@@ -1,7 +1,8 @@
-package com.example.service.Freeboard;
+package com.example.service.Borad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,11 +28,12 @@ public class FreeboardListService {
 	@Autowired
 	private PageMakerService pageMakerService;
 	
-	public List<Freeboard> freeboardList(int pageNum){ // String¹ÝÈ¯
+	
+	public List<Freeboard> freeboardList(int pageNum,String way){
 		
 		PageMaker pageMaker =  pageMakerService.generatePageMaker(pageNum, 10, freeboardRepository);
 		
-		PageRequest pageRequest = PageRequest.of(pageNum-1, 10, Sort.Direction.DESC, "freeId");
+		PageRequest pageRequest = PageRequest.of(pageNum-1, 10, Sort.Direction.DESC, way);
 		Page<Freeboard> freeboardPage = freeboardRepository.findAll(pageRequest);
 		
 
@@ -40,7 +42,6 @@ public class FreeboardListService {
 			session.setAttribute("boardList", new ArrayList<Freeboard>());
 			session.setAttribute("pageMaker", pageMaker);
 			return new ArrayList<Freeboard>();
-			//return "freeboard";
 			
 		}
 		List<Freeboard> freeboardList = freeboardPage.getContent();
@@ -48,6 +49,6 @@ public class FreeboardListService {
 		session.setAttribute("boardList", freeboardList);
 		session.setAttribute("pageMaker", pageMaker);
 		System.out.print(freeboardList);
-		return freeboardList; //"freeboard"
+		return freeboardList; 
 	}
 }

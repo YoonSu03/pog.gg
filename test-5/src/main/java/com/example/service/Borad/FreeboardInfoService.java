@@ -1,4 +1,4 @@
-package com.example.service.Freeboard;
+package com.example.service.Borad;
 
 import java.util.Optional;
 
@@ -19,13 +19,14 @@ public class FreeboardInfoService {
 	@Autowired
 	private HttpSession session;
 	
-	public Freeboard getFreeboardPost(String stringFreeId) {
-		Long freeId = Long.parseLong(stringFreeId);
+	public Freeboard getFreeboardPost(Long freeId) {
+	//	Long freeId = Long.parseLong(stringFreeId);
 		Freeboard freeboard = freeboardRepository.findByFreeId(freeId);
 		if(freeboard == null) {
 			return freeboard;
 		}
-		
+		freeboard.setViewCount();
+		freeboardRepository.save(freeboard);
 		session.setAttribute("freeboard", freeboard);
 		return freeboard;
 	}

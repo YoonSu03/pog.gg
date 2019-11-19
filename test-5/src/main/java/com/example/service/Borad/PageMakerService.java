@@ -1,15 +1,16 @@
-package com.example.service.Freeboard;
+package com.example.service.Borad;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Freeboard;
+import com.example.model.Teamboard;
 import com.example.pageMaker.PageMaker;
 
 @Service
 public class PageMakerService {
 
-	public PageMaker generatePageMaker(int pageNum, int contentNum,JpaRepository<Freeboard/*Model 여러종류 게시판사용시*/, Long> repository) {
+	public <T> PageMaker generatePageMaker(int pageNum, int contentNum,JpaRepository<T, Long> repository) {
 		PageMaker pageMaker = new PageMaker();
 		
 		int totalCount = (int)repository.count();
@@ -24,4 +25,5 @@ public class PageMakerService {
 		
 		return pageMaker;
 	}
+
 }

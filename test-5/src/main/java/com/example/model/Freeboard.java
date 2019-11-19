@@ -13,29 +13,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "freeboard")
-public class Freeboard {
+public class Freeboard extends Board{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "freeId")
 	private Long freeId;
-	
-	@Column(name = "content")
 	private String content;
-	
-	@Column(name = "title")
 	private String title;
-	
-	@Column(name = "writer")
 	private String writer;
-	
-	@Column(name = "commentCount")
-	private int commentCount;
-	
-	@Column(name = "voteCount")
-    private int voteCount;
-	
-	private LocalDateTime date;
+	private int viewCount=0;
+	private int voteCount=0;
+	private LocalDate date;
+	private String champion;
 
 	public Long getFreeId() {
 		return freeId;
@@ -62,15 +51,35 @@ public class Freeboard {
 	public void setWriter(String writer) {
 		this.writer=writer;
 	}
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date=date;
 	}
-	@Override
-	public String toString() {
-		return "freeId" + freeId;
+	
+	public int getViewCount() {
+		return viewCount;
+	}
+	
+	public void setViewCount() {
+		this.viewCount++;
+	}
+	
+	public int getVoteCount() {
+		return voteCount;
+	}
+	
+	public void setVoteCount(int voteCount) {
+		this.voteCount += voteCount;
+	}
+	
+	public String getChampion() {
+		return champion;
+	}
+	
+	public void setChampion(String champion) {
+		this.champion = champion;
 	}
 	
 }

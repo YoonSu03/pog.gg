@@ -49,7 +49,7 @@ public class Co_Token {
     	return this.token;
     }
     //인증 후 데이터 반환 유저객체로 반환 기본 스트링 반환 파라미터 String token throws InvalidJwtAuthenticationException
-    public Users verifyToken() throws InvalidJwtAuthenticationException {
+    public Users verifyToken(String token) throws InvalidJwtAuthenticationException {
         String key = Base64.getEncoder().encodeToString(Base64.getEncoder().encodeToString("key".getBytes()).getBytes());
         JwtParser jwtParser = Jwts.parser();
         Claims claims = jwtParser
