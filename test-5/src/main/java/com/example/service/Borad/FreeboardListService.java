@@ -29,15 +29,23 @@ public class FreeboardListService {
 	private PageMakerService pageMakerService;
 	
 	
-	public List<Freeboard> freeboardList(int pageNum,String way){
+	public List<Freeboard> freeboardList(int pageNum,String way,String champion){
 		
 		PageMaker pageMaker =  pageMakerService.generatePageMaker(pageNum, 10, freeboardRepository);
 		
 		PageRequest pageRequest = PageRequest.of(pageNum-1, 10, Sort.Direction.DESC, way);
-		Page<Freeboard> freeboardPage = freeboardRepository.findAll(pageRequest);
+		
+		Page<Freeboard> freeboardPage;
+		
+		if(champion.equalsIgnoreCase("all")) {
+			freeboardPage = freeboardRepository.findAll(pageRequest);
+		}else {
+			freeboardPage = freeboardRepository.findByChampion(champion, pageRequest);
+		}
+		
 		
 
-		System.out.print(freeboardPage.getContent());
+		
 		if(freeboardPage.getSize()==0) {
 			session.setAttribute("boardList", new ArrayList<Freeboard>());
 			session.setAttribute("pageMaker", pageMaker);

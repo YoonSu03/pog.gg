@@ -60,8 +60,8 @@ public class Highlightboard extends Board{
 		return commentCount;
 	}
 	
-	public void setCommentCount(int commentCount) {
-		this.commentCount+= commentCount;
+	public void setCommentCount() {
+		this.commentCount++;
 	}
 	
 	public int getVoteCount() {

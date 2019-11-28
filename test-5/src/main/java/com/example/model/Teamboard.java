@@ -1,5 +1,9 @@
 package com.example.model;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -7,7 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import org.hibernate.Hibernate;
+
 
 @Entity
 @Table(name = "teamboard")
@@ -17,12 +25,16 @@ public class Teamboard extends Board{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long freeId;
 	private String content;
+	//@Lob
+    //@Column(name = "content", columnDefinition="BLOB")
+    //private byte[] blob;
 	private String title;
 	private String writer;
 	private int viewCount=0;
 	private int voteCount=0;
 	private LocalDateTime date;
 	private String teamName;
+	private int commentCount=0;
 
 	public Long getFreeId() {
 		return freeId;
@@ -30,6 +42,24 @@ public class Teamboard extends Board{
 	public void setFreeId(Long freeId) {
 		this.freeId=freeId;
 	}
+	//public byte[] getBlob() {
+	//	return blob;
+	//}
+	//public void setBlob(byte[] blob) {
+	//	this.blob = blob;
+	//}
+	
+	//public InputStream getPhotoContent() throws SQLException { 
+	//	if (getBlob() == null) {
+	//		return null; 
+	//	} 
+	//	return getBlob().getBinaryStream(); 
+	//}
+	//public void setPhotoContent(InputStream sourceStream) throws IOException {
+	//	setBlob(Hibernate.createBlob(sourceStream));
+	//	}
+
+
 	public String getContent()
 	{
 		return content;
@@ -78,5 +108,12 @@ public class Teamboard extends Board{
 	
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}
+	public int getCommentCount() {
+		return commentCount;
+	}
+	
+	public void setCommentCount() {
+		this.commentCount++;
 	}
 }

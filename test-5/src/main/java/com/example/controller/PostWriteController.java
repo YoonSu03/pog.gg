@@ -8,24 +8,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.hibernate.validator.cfg.context.ReturnValueConstraintMappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Freeboard;
 import com.example.model.Highlightboard;
 import com.example.model.Teamboard;
 import com.example.model.Users;
+import com.example.repository.CommentRepository;
 import com.example.repository.FreeboardRepository;
 import com.example.repository.HighlightRepository;
 import com.example.repository.TeamRepository;
-import com.example.service.Borad.FreeboardInfoService;
-import com.example.service.Borad.FreeboardListService;
 import com.example.token.Co_Token;
 import com.example.token.InvalidJwtAuthenticationException;
 
@@ -34,7 +34,8 @@ import com.example.token.InvalidJwtAuthenticationException;
 public class PostWriteController{
 	
 	
-	
+	@Autowired
+	CommentRepository commentRepository;
 	
 	@Autowired
 	FreeboardRepository tipboardRepository;
@@ -54,7 +55,7 @@ public class PostWriteController{
 	
 	@PostMapping("/tipboardWriteRequest")
 	public Freeboard tipboardWriteRequest(@RequestHeader (value = "token")String token ,@RequestBody Freeboard param) {
-		LocalDate date =LocalDate.now();
+		LocalDateTime date =LocalDateTime.now();
 		Users user = new Users();
 		try {
 			user = tokenRequest(token);
@@ -65,6 +66,16 @@ public class PostWriteController{
 		param.setWriter(user.getUsername());
 		
 		return tipboardRepository.save(param);
+	}
+	
+	
+	
+	@DeleteMapping("/tipboardDeleteRequest")
+	@ResponseStatus(HttpStatus.OK)
+	public void tipboardDeleteRequest(@RequestParam (value = "freeid")Long freeId) {
+		tipboardRepository.deleteById(freeId);
+		commentRepository.deleteByFreeIdAndPostType(freeId,1);
+		
 	}
 	
 	@PostMapping("/teamboardWriteRequest")
@@ -78,9 +89,17 @@ public class PostWriteController{
 		}
 		param.setDate(date);
 		param.setWriter(user.getUsername());
+		param.setTeamName(param.getTeamName().toUpperCase());
 	
 		
 		return teamboardRepository.save(param);
+	}
+	
+	@DeleteMapping("/teamboardDeleteRequest")
+	@ResponseStatus(HttpStatus.OK)
+	public void teamboardDeleteRequest(@RequestParam (value = "freeid")Long freeId) {
+		teamboardRepository.deleteById(freeId);
+		commentRepository.deleteByFreeIdAndPostType(freeId, 2);
 	}
 	
 	@PostMapping("/highlightboardWriteRequest")
@@ -98,5 +117,11 @@ public class PostWriteController{
 		return highlightboardRepository.save(param);
 	}
 	
+	@DeleteMapping("/highlightboardDeleteRequest")
+	@ResponseStatus(HttpStatus.OK)
+	public void highlightboardDeleteRequest(@RequestParam (value = "freeid")Long freeId) {
+		highlightboardRepository.deleteById(freeId);
+		commentRepository.deleteByFreeIdAndPostType(freeId,3);
+	}
 	
 }

@@ -23,9 +23,10 @@ public class Freeboard extends Board{
 	private String writer;
 	private int viewCount=0;
 	private int voteCount=0;
-	private LocalDate date;
+	private LocalDateTime date;
 	private String champion;
-
+	private int commentCount=0;
+	
 	public Long getFreeId() {
 		return freeId;
 	}
@@ -51,10 +52,10 @@ public class Freeboard extends Board{
 	public void setWriter(String writer) {
 		this.writer=writer;
 	}
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date=date;
 	}
 	
@@ -82,4 +83,11 @@ public class Freeboard extends Board{
 		this.champion = champion;
 	}
 	
+	public int getCommentCount() {
+		return commentCount;
+	}
+	
+	public void setCommentCount() {
+		this.commentCount++;
+	}
 }
